@@ -1,4 +1,4 @@
-const Video = require('../models/video.js');
+const Video = require('../models/Video');
 
 exports.getVideos = async (req, res) => {
     Video.paginate({ title: { $regex: new RegExp(req.query.query), $options: "i" } }, {

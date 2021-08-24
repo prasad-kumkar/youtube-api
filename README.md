@@ -4,15 +4,19 @@ This project queries latest search results and stores them in mongodb, which cou
 
 Returned response supports pagination.
 
-## Instructions to run 
-`docker run prasadkumkar/youtube-search-api -e API_KEY=YOUR_YOUTUBE_API_KEY -e MONGO_USR=YOUR_MONGODB_USERNAME -e MONGO_PWD=YOUR_MONGODB_PWD`
+## Instructions
+### Pull the container
+`docker pull prasadkumkar/youtube-search-api:latest`
 
-To see the videos being added to db
-`docker logs prasadkumkar/youtube-search-api`
+### Run the container
+`docker run -p 5000:5000 -d  -e API_KEY=YOUR_YOUTUBE_API_KEY -e MONGO_USR=YOUR_MONGODB_USERNAME -e MONGO_PWD=YOUR_MONGODB_PWD --name youtube-api-1 prasadkumkar/youtube-search-api`
 
-Query videos from DB
-### Sample Query
-`http://localhost:3000/videos/getVideos?page=3&limit=5&query=blue`<br/>
+### See Logs
+`docker logs $(docker ps -f name=youtube-api-1 -q)`
+
+### Query videos from DB
+Sample Query
+`http://localhost:5000/videos/getVideos?page=3&limit=2&query=blue`<br/>
 Response
 ```
 {

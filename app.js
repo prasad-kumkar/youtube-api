@@ -6,6 +6,9 @@ var logger = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 
+const axios = require('axios')
+const Video = require('./models/Video.js');
+
 var videoRouter = require('./routes/video');
 
 var app = express();
@@ -54,9 +57,6 @@ connection.on('error', (err) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
     process.exit();
 });
-
-const axios = require('axios')
-const Video = require('./models/video.js');
 
 function updateVideos(){
   axios.get('https://youtube.googleapis.com/youtube/v3/search', { 
