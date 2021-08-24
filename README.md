@@ -1,17 +1,85 @@
-### Node Express template project
+# Youtube Search API
 
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
+This project queries latest search results and stores them in mongodb, which could be queried with `videos/getVideos` passing title, description.
 
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/express).
+Returned response supports pagination.
 
-### CI/CD with Auto DevOps
+## Instructions to run 
+`docker run prasadkumkar/youtube-search-api -e API_KEY=YOUR_YOUTUBE_API_KEY -e MONGO_USR=YOUR_MONGODB_USERNAME -e MONGO_PWD=YOUR_MONGODB_PWD`
 
-This template is compatible with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/).
+To see the videos being added to db
+`docker logs prasadkumkar/youtube-search-api`
 
-If Auto DevOps is not already enabled for this project, you can [turn it on](https://docs.gitlab.com/ee/topics/autodevops/#enabling-auto-devops) in the project settings.
-
-### Developing with Gitpod
-
-This template has a fully-automated dev setup for [Gitpod](https://docs.gitlab.com/ee/integration/gitpod.html).
-
-If you open this project in Gitpod, you'll get all Node dependencies pre-installed and Express will open a web preview.
+Query videos from DB
+### Sample Query
+`http://localhost:3000/videos/getVideos?page=3&limit=5&query=blue`<br/>
+Response
+```
+{
+    "docs": [
+        {
+            "_id": "6124d246a1c7da2294f7f0d9",
+            "id": "VmqP-1l7eTQ",
+            "title": "Blue Jays vs. Mariners Game Highlights (8/14/21) | MLB Highlights",
+            "description": "Blue Jays vs. Mariners full game highlights from 8/14/21 Don't forget to subscribe! https://www.youtube.com/mlb Follow us elsewhere too: Twitter: ...",
+            "publishTime": "2021-08-15T06:48:16Z",
+            "thumbnailUrls": {
+                "default": {
+                    "url": "https://i.ytimg.com/vi/VmqP-1l7eTQ/default.jpg",
+                    "width": 120,
+                    "height": 90
+                },
+                "medium": {
+                    "url": "https://i.ytimg.com/vi/VmqP-1l7eTQ/mqdefault.jpg",
+                    "width": 320,
+                    "height": 180
+                },
+                "high": {
+                    "url": "https://i.ytimg.com/vi/VmqP-1l7eTQ/hqdefault.jpg",
+                    "width": 480,
+                    "height": 360
+                }
+            },
+            "createdAt": "2021-08-24T11:04:38.379Z",
+            "updatedAt": "2021-08-24T11:04:38.379Z",
+            "__v": 0
+        },
+        {
+            "_id": "6124d247a1c7da2294f7f0db",
+            "id": "VmqP-1l7eTQ",
+            "title": "Blue Jays vs. Mariners Game Highlights (8/14/21) | MLB Highlights",
+            "description": "Blue Jays vs. Mariners full game highlights from 8/14/21 Don't forget to subscribe! https://www.youtube.com/mlb Follow us elsewhere too: Twitter: ...",
+            "publishTime": "2021-08-15T06:48:16Z",
+            "thumbnailUrls": {
+                "default": {
+                    "url": "https://i.ytimg.com/vi/VmqP-1l7eTQ/default.jpg",
+                    "width": 120,
+                    "height": 90
+                },
+                "medium": {
+                    "url": "https://i.ytimg.com/vi/VmqP-1l7eTQ/mqdefault.jpg",
+                    "width": 320,
+                    "height": 180
+                },
+                "high": {
+                    "url": "https://i.ytimg.com/vi/VmqP-1l7eTQ/hqdefault.jpg",
+                    "width": 480,
+                    "height": 360
+                }
+            },
+            "createdAt": "2021-08-24T11:04:39.932Z",
+            "updatedAt": "2021-08-24T11:04:39.932Z",
+            "__v": 0
+        }
+    ],
+    "totalDocs": 13,
+    "limit": 2,
+    "totalPages": 7,
+    "page": 3,
+    "pagingCounter": 5,
+    "hasPrevPage": true,
+    "hasNextPage": true,
+    "prevPage": 2,
+    "nextPage": 4
+}
+```

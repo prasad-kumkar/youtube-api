@@ -1,15 +1,15 @@
-FROM node:8.11-alpine
+FROM node:14
 
+# Create app directory
 WORKDIR /usr/src/app
 
-ARG NODE_ENV
-ENV NODE_ENV $NODE_ENV
+# Install app dependencies
+COPY package*.json ./
 
-COPY package*.json /usr/src/app/
 RUN npm install
 
-COPY . /usr/src/app
+COPY . ./
 
 ENV PORT 5000
-EXPOSE $PORT
+EXPOSE ${PORT}
 CMD [ "npm", "start" ]
